@@ -16,9 +16,9 @@ const allowedOrigins = [
 ];
 
 // ✅ CORS configuration
-app.use(cors({
+const corsOptions = {
   origin: function (origin, callback) {
-    // allow requests with no origin (like Postman)
+    // allow requests with no origin (Postman, server-to-server)
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
@@ -29,10 +29,13 @@ app.use(cors({
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-}));
+};
 
-// ✅ IMPORTANT: handle preflight requests
-app.options("*", cors());
+// Apply CORS globally
+app.use(cors(corsOptions));
+
+// ✅ FIX: proper preflight handling (NO "*")
+app.options(/.*/, cors(corsOptions));
 
 // Middlewares
 app.use(express.json());
@@ -45,13 +48,19 @@ app.use("/api/chat", require("./routes/chatRoutes"));
 app.get("/api/protected", authMiddleware, (req, res) => {
   res.json({
     message: "Access granted",
-    user: req.user
+    user: req.user,
   });
 });
 
 // Default route
 app.get("/", (req, res) => {
   res.send("Psycin backend is running");
+});
+
+// ❌ NO wildcard route like "*" here (Express v5 breaks it)
+// If you want 404 handler, use this safely:
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
 });
 
 const PORT = process.env.PORT || 5000;
