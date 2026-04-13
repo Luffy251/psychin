@@ -19,13 +19,13 @@ const FEATURES = [
     icon: "🌙",
     tag: "Availability",
     title: "Always Present",
-    desc: "Anxiety doesn't follow a schedule. Psycin is available at 3am on a Tuesday, or whenever you need a quiet space.",
+    desc: "Anxiety doesn't follow a schedule. Psycin is available anytime you need a quiet space.",
   },
 ];
 
 const STATS = [
   { value: "10k+", label: "Sessions completed" },
-  { value: "94%",  label: "Report feeling calmer" },
+  { value: "94%", label: "Report feeling calmer" },
   { value: "24/7", label: "Always available" },
 ];
 
@@ -33,7 +33,7 @@ export default function Home() {
   return (
     <div className="hp-root">
 
-      {/* ── Navbar ── */}
+      {/* Navbar */}
       <nav className="hp-nav">
         <Link to="/" className="hp-nav-brand">
           <span className="hp-nav-icon">🧠</span>
@@ -41,23 +41,19 @@ export default function Home() {
         </Link>
         <div className="hp-nav-links">
           <a href="#features" className="hp-nav-link">Features</a>
-          <Link to="/login"    className="hp-nav-link">Sign In</Link>
+          <Link to="/login" className="hp-nav-link">Sign In</Link>
           <Link to="/register" className="hp-nav-cta">Begin Journey</Link>
         </div>
       </nav>
 
-      {/* ══ HERO — full-screen 3D background ══ */}
+      {/* Hero */}
       <section className="hp-hero">
-
-        {/* 3D Neural sphere fills the entire hero */}
         <div className="hp-hero-bg">
           <NeuralFace3D />
         </div>
 
-        {/* Dark radial overlay so text is readable */}
         <div className="hp-hero-overlay" />
 
-        {/* Centered text content on top */}
         <div className="hp-hero-content">
           <div className="hp-badge">
             <span className="hp-badge-dot" />
@@ -92,19 +88,19 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Subtle scroll indicator */}
         <div className="hp-scroll-hint">
           <div className="hp-scroll-line" />
           <span>scroll</span>
         </div>
-
       </section>
 
-      {/* ══ FEATURES ══ */}
+      {/* Features */}
       <section className="hp-features" id="features">
         <div className="hp-features-header">
           <span className="hp-eyebrow">Why Psycin</span>
-          <h2 className="hp-h2">Built for the moments<br />that matter most.</h2>
+          <h2 className="hp-h2">
+            Built for the moments<br />that matter most.
+          </h2>
           <p className="hp-features-sub">
             Not a therapy replacement — a gentle, intelligent presence
             when you need someone to talk to.
@@ -126,7 +122,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ QUOTE ══ */}
+      {/* Quote */}
       <section className="hp-quote-section">
         <div className="hp-quote-inner">
           <p className="hp-quote">
@@ -137,7 +133,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ══ CTA ══ */}
+      {/* CTA */}
       <section className="hp-cta">
         <div className="hp-cta-glow" />
         <h2 className="hp-cta-h2">
@@ -149,7 +145,7 @@ export default function Home() {
         <p className="hp-cta-note">No credit card. No commitment. Just clarity.</p>
       </section>
 
-      {/* ══ FOOTER ══ */}
+      {/* Footer */}
       <footer className="hp-footer">
         <div className="hp-footer-inner">
           <div className="hp-footer-brand">🧠 Psycin</div>
@@ -157,8 +153,10 @@ export default function Home() {
             <a href="#features">Features</a>
             <Link to="/login">Sign In</Link>
             <Link to="/register">Create account</Link>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
+
+            {/* FIXED HERE */}
+            <button className="hp-link-btn">Privacy</button>
+            <button className="hp-link-btn">Terms</button>
           </nav>
           <p className="hp-footer-copy">© 2026 Psycin. Crafted with care.</p>
         </div>
