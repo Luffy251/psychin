@@ -1,0 +1,61 @@
+/* Cinematic Background Layers */
+.app-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+/* Floating abstract layer orbs */
+.app-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px); /* Deep blur for abstract feel */
+  z-index: -1;
+  pointer-events: none;
+  animation: floatOrb 20s infinite ease-in-out alternate;
+}
+
+.orb-1 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #3b0764 0%, transparent 70%); /* Deep Violet */
+  top: -200px;
+  left: -200px;
+}
+
+.orb-2 {
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, #0e7490 0%, transparent 70%); /* Deep Cyan */
+  bottom: -200px;
+  right: -200px;
+  animation-delay: -5s;
+}
+
+.orb-3 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #831843 0%, transparent 70%); /* Deep Magenta */
+  top: 40%;
+  left: 60%;
+  animation-duration: 25s;
+  animation-delay: -10s;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, 40px) scale(1.05); }
+  100% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+/* Generic glass layer */
+.layer-glass {
+  background: var(--glass-bg);
+  backdrop-filter: var(--depth-blur-heavy);
+  -webkit-backdrop-filter: var(--depth-blur-heavy);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-soft);
+  box-shadow: var(--depth-shadow-1);
+}

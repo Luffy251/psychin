@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600&display=swap');
+
+:root {
+  /* Cinematic Deep Mindscape Theme */
+  --bg-color: #0b0c10; /* Very deep charcoal/midnight blue */
+  --layer-glow: rgba(45, 66, 99, 0.4); 
+  --text-main: #f0f4f8; /* Crisp off-white */
+  --text-muted: #8b9bb4;
+  --glass-bg: rgba(20, 25, 35, 0.35); /* Darker frost */
+  --glass-bg-hover: rgba(30, 38, 52, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.08); /* Subtle border glint */
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --depth-shadow-1: 0 8px 24px -5px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.05);
+  --depth-shadow-2: 0 16px 40px -10px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255,255,255,0.08);
+  --depth-blur-light: blur(12px);
+  --depth-blur-heavy: blur(32px);
+  --radius-soft: 20px;
+  --radius-pill: 100px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-color);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* Deep cinematic radial gradient */
+  background: radial-gradient(circle at 50% 100%, #151a25 0%, #0b0c10 100%);
+  background-attachment: fixed;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* Global Typography tweaks for an immersive dark vibe */
+h1, h2, h3, h4, h5, h6, .chat-title, .hp-nav-name, .auth-title, .hp-section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+/* Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-pill);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
