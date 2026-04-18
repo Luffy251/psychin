@@ -15,14 +15,13 @@
 
 /* ── Root: true full-screen ─────────────────────────────────── */
 .chat-root {
-  width: 100vw;
-  height: 100dvh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  display: flex;
   position: fixed;
   top: 0;
+  bottom: 0;
   left: 0;
+  right: 0;
+  display: flex;
+  overflow: hidden;
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   z-index: 100;
@@ -36,10 +35,9 @@
   flex-direction: row;
   width: 100%;
   max-width: 1200px;
-  height: 85dvh;
-  max-height: 900px;
-  min-height: 600px;
-  margin: auto; /* Floats beautifully in the center */
+  height: 100%;
+  max-height: 100%;
+  margin: 0 auto; /* Fills screen vertically */
   gap: 12px;
   box-sizing: border-box;
   padding: 0 20px; /* Padding on sides for smaller screens */
@@ -141,9 +139,10 @@
   background: rgba(18, 22, 33, 0.55);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255,255,255,0.08);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
   animation: chatFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
@@ -443,8 +442,8 @@
 }
 
 @media (max-width: 480px) {
-  .chat-layout { padding: 0; border-radius: 0; height: 100dvh; max-height: 100dvh; }
-  .chat-container { border-radius: 0; border: none; }
+  .chat-layout { padding: 0; height: 100%; max-height: 100%; }
+  .chat-container { border: none; }
 }
 
 /* ── Crisis Alert Modal ─────────────────────────────────────── */
