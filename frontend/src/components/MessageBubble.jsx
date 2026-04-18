@@ -1,6 +1,39 @@
+import { useState, useEffect } from "react";
+
 /* eslint-disable react/prop-types */
 export default function MessageBubble({ role, content }) {
   const isUser = role === "user";
+  const [displayedContent, setDisplayedContent] = useState(isUser ? content : "");
+
+  useEffect(() => {
+    // User messages display instantly
+    if (isUser) {
+      setDisplayedContent(content);
+      return;
+    }
+
+    // Interval-based typing effect for AI response (word-by-word)
+    const words = content.split(" ");
+    let currentWordIndex = 0;
+
+    setDisplayedContent(""); // Start blank
+
+    const intervalId = setInterval(() => {
+      currentWordIndex++;
+      setDisplayedContent(words.slice(0, currentWordIndex).join(" "));
+
+      if (currentWordIndex >= words.length) {
+        clearInterval(intervalId);
+      }
+      
+      const scrollAnchor = document.getElementById("chat-messages-end");
+      if (scrollAnchor) {
+        scrollAnchor.scrollIntoView({ behavior: "auto" });
+      }
+    }, 45); // 45ms allows a smooth conversational typing pace for words
+
+    return () => clearInterval(intervalId);
+  }, [content, isUser]);
 
   return (
     <div
@@ -53,9 +86,10 @@ export default function MessageBubble({ role, content }) {
           fontSize: "15px",
           lineHeight: "1.65",
           color: "#f1f5f9",
+          minHeight: "24px", // To prevent jumpiness during typing
         }}
       >
-        {content}
+        {displayedContent}
       </div>
 
       <style>{`

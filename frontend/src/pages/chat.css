@@ -13,10 +13,10 @@
   --accent-3:      #a855f7;
 }
 
-/* ── Root: true full-screen, no scroll ─────────────────────── */
+/* ── Root: true full-screen ─────────────────────────────────── */
 .chat-root {
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
@@ -26,6 +26,49 @@
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   z-index: 100;
+}
+
+/* ── Layout: sidebar + chat panel side-by-side ───────────────── */
+.chat-layout {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 1200px;
+  height: 85dvh;
+  max-height: 900px;
+  min-height: 600px;
+  margin: auto; /* Floats beautifully in the center */
+  gap: 12px;
+  box-sizing: border-box;
+  padding: 0 20px; /* Padding on sides for smaller screens */
+}
+
+/* ── Sidebar Toggle Button ───────────────────────────────────── */
+.sidebar-toggle-btn {
+  position: fixed;
+  top: 22px;
+  left: 22px;
+  z-index: 200;
+  width: 36px;
+  height: 36px;
+  background: rgba(18, 22, 33, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  display: none; /* hidden on desktop — shown on mobile */
+}
+.sidebar-toggle-btn svg {
+  width: 18px;
+  height: 18px;
+  color: rgba(255,255,255,0.6);
 }
 
 /* ── 3D Background Layers ─────────────────────────────────────────────── */
@@ -87,16 +130,13 @@
 .chat-container {
   position: relative;
   z-index: 10;
-  width: 100%;
-  max-width: 880px;
-  height: 85vh;
-  max-height: 900px;
-  min-height: 600px;
+  flex: 1;              /* fill remaining width after sidebar */
+  min-width: 0;         /* prevent flex overflow */
+  height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  margin: auto; /* Perfectly centers flex item, allows scroll when overflowing */
-  
+
   /* Glassmorphism */
   background: rgba(18, 22, 33, 0.55);
   backdrop-filter: blur(28px);
@@ -170,6 +210,36 @@
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.chat-mode-select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e2e8f0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 14px;
+  padding-right: 28px;
+}
+
+.chat-mode-select:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.chat-mode-select option {
+  background: #0f172a; /* dark blue/gray for dropdown options */
+  color: #f1f5f9;
 }
 
 .chat-status {
@@ -362,10 +432,114 @@
 }
 
 /* ── Responsive ─────────────────────────────────────────────── */
-@media (max-width: 640px) {
-  .chat-header    { padding: 14px 20px; }
-  .chat-messages  { padding: 20px; gap: 14px; }
-  .chat-input-area { padding: 14px 20px 20px; }
-  .chat-subtitle  { display: none; }
-  .chat-status    { display: none; }
+@media (max-width: 768px) {
+  .chat-layout      { padding: 10px; gap: 0; }
+  .sidebar-toggle-btn { display: flex; }
+  .chat-header      { padding: 14px 20px; }
+  .chat-messages    { padding: 20px; gap: 14px; }
+  .chat-input-area  { padding: 14px 20px 20px; }
+  .chat-subtitle    { display: none; }
+  .chat-status      { display: none; }
+}
+
+@media (max-width: 480px) {
+  .chat-layout { padding: 0; border-radius: 0; height: 100dvh; max-height: 100dvh; }
+  .chat-container { border-radius: 0; border: none; }
+}
+
+/* ── Crisis Alert Modal ─────────────────────────────────────── */
+.crisis-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(18, 22, 33, 0.7);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.crisis-modal {
+  background: linear-gradient(135deg, rgba(220, 38, 38, 0.15), rgba(0, 0, 0, 0.6));
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  box-shadow: 0 40px 100px rgba(220, 38, 38, 0.2);
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 480px;
+  text-align: center;
+  animation: crisisPop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes crisisPop {
+  0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.crisis-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+  animation: pulseIcon 2s infinite;
+}
+
+@keyframes pulseIcon {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.crisis-modal h3 {
+  color: #f8fafc;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  margin: 0 0 16px;
+}
+
+.crisis-modal p {
+  color: #cad5e2;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+.crisis-resources {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  font-size: 15px;
+  color: #e2e8f0;
+  line-height: 1.8;
+}
+
+.crisis-resources span {
+  color: #f87171;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.crisis-close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 12px 30px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.crisis-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
 }

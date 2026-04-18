@@ -13,6 +13,8 @@ const app = express();
 // ✅ Allowed frontend origins
 const allowedOrigins = [
   "https://psychin.vercel.app",
+  "http://localhost:3000",
+  "http://localhost:5173", // Vite dev server (just in case)
 ];
 
 // ✅ CORS configuration
@@ -43,6 +45,8 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/chat", require("./routes/chatRoutes"));
+app.use("/api/conversations", require("./routes/conversationRoutes"));
+app.use("/api/analytics", require("./routes/analyticsRoutes"));
 
 // Protected test route
 app.get("/api/protected", authMiddleware, (req, res) => {
